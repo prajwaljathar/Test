@@ -28,7 +28,7 @@ jobs:
       # Build and Push Service 1
       - name: Build and Push Service 1
         run: |
-          docker build -t app1 ./project
+          docker build -t app1 ./Project
           docker tag app1:latest ${{ secrets.ECR_REPOSITORY }}:app1
           docker push ${{ secrets.ECR_REPOSITORY }}:app1
 
@@ -51,8 +51,8 @@ jobs:
 
       - name: Deploy to EKS (Service 1)
         run: |
-          kubectl apply -f /project/k8s/app1-deployment.yaml
-          kubectl apply -f /project/k8s/app1-service.yaml
+          kubectl apply -f /Project/k8s/app1-deployment.yaml
+          kubectl apply -f /Project/k8s/app1-service.yaml
 
       - name: Deploy to EKS (Service 2)
         run: |
