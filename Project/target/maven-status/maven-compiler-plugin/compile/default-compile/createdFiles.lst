@@ -1,0 +1,3 @@
+com\example\logproducer\controller\LogController.class
+com\example\logproducer\kafka\LogProducer.class
+com\example\logproducer\LogProducerApplication.class
