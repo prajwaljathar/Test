@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built JAR file from target/ folder
-#COPY target/micro-0.0.1-SNAPSHOT.jar app1.jar
+COPY target/micro-0.0.1-SNAPSHOT.jar app1.jar
 
 # Expose the application's port
 EXPOSE 8081
