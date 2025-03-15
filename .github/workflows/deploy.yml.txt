@@ -1,0 +1,54 @@
+name: Deploy to EKS (Multi-Service)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY }}
+
+      # Build and Push Service 1
+      - name: Build and Push Service 1
+        run: |
+          docker build -t service-1 ./service-1
+          docker tag service-1:latest ${{ secrets.ECR_REPOSITORY }}/service-1:latest
+          docker push ${{ secrets.ECR_REPOSITORY }}/service-1:latest
+
+      # Build and Push Service 2
+      - name: Build and Push Service 2
+        run: |
+          docker build -t service-2 ./service-2
+          docker tag service-2:latest ${{ secrets.ECR_REPOSITORY }}/service-2:latest
+          docker push ${{ secrets.ECR_REPOSITORY }}/service-2:latest
+
+      - name: Update kubeconfig for EKS
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Deploy to EKS (Service 1)
+        run: |
+          kubectl apply -f service-1/k8s/deployment.yaml
+          kubectl apply -f service-1/k8s/service.yaml
+
+      - name: Deploy to EKS (Service 2)
+        run: |
+          kubectl apply -f service-2/k8s/deployment.yaml
+          kubectl apply -f service-2/k8s/service.yaml
