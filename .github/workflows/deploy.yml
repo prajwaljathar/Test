@@ -28,22 +28,22 @@ jobs:
       # Build and Push Service 1
       - name: Build and Push Service 1
         run: |
-          docker build -t app1 ./project
+          docker build -t app1 ./Test/project
           docker tag app1:latest ${{ secrets.ECR_REPOSITORY }}:app1
           docker push ${{ secrets.ECR_REPOSITORY }}:app1
 
       # Build and Push Service 2
       - name: Build and Push Service 2
         run: |
-          docker build -t app2 ./micro2
+          docker build -t app2 ./Test/micro2
           docker tag app2:latest ${{ secrets.ECR_REPOSITORY }}:app2
           docker push ${{ secrets.ECR_REPOSITORY }}:app2
 
        # Deploy Kafka Service (if you need to deploy Kafka within Kubernetes)
       - name: Deploy Kafka Service
         run: |
-          kubectl apply -f k8s/kafka-deployment.yaml
-          kubectl apply -f k8s/kafka-service.yaml     
+          kubectl apply -f Test/k8s/kafka-deployment.yaml
+          kubectl apply -f Test/k8s/kafka-service.yaml     
 
       - name: Update kubeconfig for EKS
         run: |
@@ -51,10 +51,10 @@ jobs:
 
       - name: Deploy to EKS (Service 1)
         run: |
-          kubectl apply -f project/k8s/app1-deployment.yaml
-          kubectl apply -f project/k8s/app1-service.yaml
+          kubectl apply -f Test/project/k8s/app1-deployment.yaml
+          kubectl apply -f Test/project/k8s/app1-service.yaml
 
       - name: Deploy to EKS (Service 2)
         run: |
-          kubectl apply -f micro2/k8s/app2-deployment.yaml
-          kubectl apply -f micro2/k8s/app2-service.yaml
+          kubectl apply -f Test/micro2/k8s/app2-deployment.yaml
+          kubectl apply -f Test/micro2/k8s/app2-service.yaml
