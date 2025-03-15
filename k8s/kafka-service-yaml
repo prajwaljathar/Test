@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-service
+spec:
+  selector:
+    app: kafka  # Make sure this matches the label on your Kafka pods
+  ports:
+    - protocol: TCP
+      port: 9092  # This is the Kafka broker port
+      targetPort: 9092  # The actual port that Kafka is listening on
+  type: LoadBalancer   
