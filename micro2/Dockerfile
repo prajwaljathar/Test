@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/micro-0.0.1-SNAPSHOT.jar app2.jar
 
 # Expose the application's port
-EXPOSE 8080
+EXPOSE 8081
 
 # Run the application
 ENTRYPOINT ["java", "-jar","app2.jar"]

@@ -16,4 +16,4 @@ spec:
         - name: service-1
           image: 539247471581.dkr.ecr.eu-north-1.amazonaws.com/ecr/test:aap1
           ports:
-            - containerPort: 8081
+            - containerPort: 8080
