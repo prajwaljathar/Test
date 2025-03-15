@@ -47,7 +47,7 @@ jobs:
       - name: Deploy Kafka Service
         run: |
           kubectl apply -f ./k8s/kafka-deployment.yaml
-          kubectl apply -f ./k8s/kafka-service.yaml   
+          kubectl apply -f ./k8s/kafka-service.yaml   curl service-1-service:81/logs/send -X POST -d "Test message" -H "Content-Type: text/plain"
 
       - name: Deploy to EKS (Service 1)
         run: |
