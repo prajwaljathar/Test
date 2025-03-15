@@ -28,16 +28,16 @@ jobs:
       # Build and Push Service 1
       - name: Build and Push Service 1
         run: |
-          docker build -t service-1 ./service-1
-          docker tag service-1:latest ${{ secrets.ECR_REPOSITORY }}/service-1:latest
-          docker push ${{ secrets.ECR_REPOSITORY }}/service-1:latest
+          docker build -t app1 ./project
+          docker tag app1:latest ${{ secrets.ECR_REPOSITORY }}:app1
+          docker push ${{ secrets.ECR_REPOSITORY }}:app1
 
       # Build and Push Service 2
       - name: Build and Push Service 2
         run: |
-          docker build -t service-2 ./service-2
-          docker tag service-2:latest ${{ secrets.ECR_REPOSITORY }}/service-2:latest
-          docker push ${{ secrets.ECR_REPOSITORY }}/service-2:latest
+          docker build -t app2 ./micro2
+          docker tag app2:latest ${{ secrets.ECR_REPOSITORY }}:app2
+          docker push ${{ secrets.ECR_REPOSITORY }}:app2
 
       - name: Update kubeconfig for EKS
         run: |
@@ -45,10 +45,10 @@ jobs:
 
       - name: Deploy to EKS (Service 1)
         run: |
-          kubectl apply -f service-1/k8s/deployment.yaml
-          kubectl apply -f service-1/k8s/service.yaml
+          kubectl apply -f k8s/app1-deployment.yaml
+          kubectl apply -f k8s/app1-service.yaml
 
       - name: Deploy to EKS (Service 2)
         run: |
-          kubectl apply -f service-2/k8s/deployment.yaml
-          kubectl apply -f service-2/k8s/service.yaml
+          kubectl apply -f k8s/app2-deployment.yaml
+          kubectl apply -f k8s/app2-service.yaml
