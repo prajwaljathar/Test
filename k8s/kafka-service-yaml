@@ -10,3 +10,4 @@ spec:
       port: 9092  # This is the Kafka broker port
       targetPort: 9092  # The actual port that Kafka is listening on
   type: LoadBalancer   
+  
