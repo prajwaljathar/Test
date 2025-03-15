@@ -38,16 +38,16 @@ jobs:
           docker build -t app2 ./micro2
           docker tag app2:latest ${{ secrets.ECR_REPOSITORY }}:app2
           docker push ${{ secrets.ECR_REPOSITORY }}:app2
-
-       # Deploy Kafka Service (if you need to deploy Kafka within Kubernetes)
-      - name: Deploy Kafka Service
-        run: |
-          kubectl apply -f ./k8s/kafka-deployment.yaml
-          kubectl apply -f ./k8s/kafka-service.yaml     
-
+  
       - name: Update kubeconfig for EKS
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      # Deploy Kafka Service (if you need to deploy Kafka within Kubernetes)
+      - name: Deploy Kafka Service
+        run: |
+          kubectl apply -f ./k8s/kafka-deployment.yaml
+          kubectl apply -f ./k8s/kafka-service.yaml   
 
       - name: Deploy to EKS (Service 1)
         run: |
