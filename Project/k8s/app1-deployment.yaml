@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-2
+  name: service-1
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: service-2
+      app: service-1
   template:
     metadata:
       labels:
-        app: service-2
+        app: service-1
     spec:
       containers:
-        - name: service-2
+        - name: service-1
           image: 539247471581.dkr.ecr.eu-north-1.amazonaws.com/ecr/test:aap1
           ports:
             - containerPort: 8081
