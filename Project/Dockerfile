@@ -11,4 +11,4 @@ WORKDIR /app
 EXPOSE 8081
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app1.jar"]
+ENTRYPOINT ["java", "-jar","-Dserver.port=8081", "app1.jar"]

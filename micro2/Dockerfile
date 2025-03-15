@@ -11,4 +11,4 @@ COPY target/micro-0.0.1-SNAPSHOT.jar app2.jar
 EXPOSE 8080
 
 # Run the application
-ENTRYPOINT ["java", "-jar", "app2.jar"]
+ENTRYPOINT ["java", "-jar","-Dserver.port=8080", "app2.jar"]
