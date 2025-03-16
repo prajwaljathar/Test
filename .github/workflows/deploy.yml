@@ -46,6 +46,12 @@ jobs:
       # Deploy Kafka Service (if you need to deploy Kafka within Kubernetes)
       - name: Deploy Kafka Service
         run: |
+          kubectl apply -f ./k8s/zookeper-deployment.yaml  
+          kubectl apply -f ./k8s/zookeper-service.yaml       
+
+      # Deploy Kafka Service (if you need to deploy Kafka within Kubernetes)
+      - name: Deploy Kafka Service
+        run: |
           kubectl apply -f ./k8s/kafka-deployment.yaml  
           kubectl apply -f ./k8s/kafka-service.yaml   
 
